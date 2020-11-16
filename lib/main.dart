@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'dart:math';
 
 void main() {
   runApp(
@@ -15,7 +16,7 @@ class MyWidget extends StatefulWidget {
 
 class _MyWidgetState extends State<MyWidget> {
   Timer _timer;
-  int _start = 500;
+  int _start = 1500;
   final double _iconSize = 50;
   void startTimer() {
     if (_timer != null) {
@@ -54,6 +55,12 @@ class _MyWidgetState extends State<MyWidget> {
     });
   }
 
+  String formatTimer() {
+    var f = _start % 60;
+    var g = (_start / 60).floor();
+    return '${g} : ${f}';
+  }
+
   @override
   void dispose() {
     _timer.cancel();
@@ -68,7 +75,7 @@ class _MyWidgetState extends State<MyWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "$_start",
+              formatTimer(),
               style: Theme.of(context).textTheme.headline4,
             ),
             // Spacer(),
