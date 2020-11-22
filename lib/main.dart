@@ -66,7 +66,8 @@ class _MyWidgetState extends State<MyWidget> {
 
   double completionPercentage() {
     double f = _start / _initial;
-    return f;
+
+    return 1 - f;
   }
 
   @override
@@ -88,6 +89,7 @@ class _MyWidgetState extends State<MyWidget> {
               child: CircularProgressIndicator(
                 value: completionPercentage(),
                 strokeWidth: 15.0,
+                backgroundColor: Colors.grey,
               ),
             ),
             // Spacer(),
