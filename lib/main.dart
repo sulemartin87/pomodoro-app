@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math';
@@ -17,6 +19,7 @@ class MyWidget extends StatefulWidget {
 class _MyWidgetState extends State<MyWidget> {
   Timer _timer;
   int _start = 1500;
+  int _initial = 1500;
   final double _iconSize = 50;
   void startTimer() {
     if (_timer != null) {
@@ -51,7 +54,7 @@ class _MyWidgetState extends State<MyWidget> {
         _timer.cancel();
         _timer = null;
       }
-      _start = 500;
+      _start = _initial;
     });
   }
 
@@ -59,6 +62,11 @@ class _MyWidgetState extends State<MyWidget> {
     var f = _start % 60;
     var g = (_start / 60).floor();
     return '${g} : ${f}';
+  }
+
+  double completionPercentage() {
+    double f = _start / _initial;
+    return f;
   }
 
   @override
@@ -72,14 +80,21 @@ class _MyWidgetState extends State<MyWidget> {
       appBar: AppBar(title: Text("pomo")),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            Container(
+              width: MediaQuery.of(context).size.width / 2,
+              height: MediaQuery.of(context).size.height / 4.5,
+              child: CircularProgressIndicator(
+                value: completionPercentage(),
+                strokeWidth: 15.0,
+              ),
+            ),
+            // Spacer(),
             Text(
               formatTimer(),
               style: Theme.of(context).textTheme.headline4,
             ),
-            // Spacer(),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -118,11 +133,11 @@ class _MyWidgetState extends State<MyWidget> {
         ),
       ),
       // backgroundColor: ,
-      floatingActionButton: FloatingActionButton(
-        onPressed: startTimer,
-        tooltip: 'Increment',
-        child: Icon(Icons.play_arrow),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: startTimer,
+      //   tooltip: 'Increment',
+      //   child: Icon(Icons.play_arrow),
+      // ),
     );
   }
 }
